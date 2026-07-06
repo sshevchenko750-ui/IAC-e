@@ -1,0 +1,28 @@
+{
+  "scriptId": "19fqng0h6G50-MCpRR0n3E3rjSyriN--2chOfIjBUo1OVVLUAlyvwXatL",
+  "rootDir": "",
+  "scriptExtensions": [
+    ".js",
+    ".gs"
+  ],
+  "htmlExtensions": [
+    ".html"
+  ],
+  "jsonExtensions": [
+    ".json"
+  ],
+  "filePushOrder": [
+    "Config.gs",
+    "Bootstrap.gs",
+    "SheetFactory.gs",
+    "HeaderService.gs",
+    "FormatService.gs",
+    "ValidationService.gs",
+    "WorkIdService.gs",
+    "WorksRepository.gs",
+    "WorksModule.gs",
+    "App.gs",
+    "Menu.gs"
+  ],
+  "skipSubdirectories": false
+}

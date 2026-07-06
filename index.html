@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ІАС ПМД - Облік роботи піротехнічних розрахунків</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1F4E78 0%, #2a5fa0 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            background: #f8f9fa;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button.active {
+            color: #1F4E78;
+            border-bottom-color: #1F4E78;
+            background: white;
+        }
+
+        .tab-button:hover {
+            background: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .required::after {
+            content: ' *';
+            color: #EA4335;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1F4E78;
+            box-shadow: 0 0 0 3px rgba(31, 78, 120, 0.1);
+            background-color: #f0f4f8;
+        }
+
+        input[type="date"],
+        input[type="number"] {
+            width: 100%;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1F4E78 0%, #2a5fa0 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(31, 78, 120, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: #34A853;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-success:hover {
+            background: #2d8e47;
+        }
+
+        .btn-warning {
+            background: #FBBC05;
+            color: #333;
+            flex: 1;
+        }
+
+        .btn-warning:hover {
+            background: #e0a804;
+        }
+
+        .btn-danger {
+            background: #EA4335;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d33426;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #f0f0f0;
+            position: sticky;
+            top: 0;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+            background: #1F4E78;
+            color: white;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-buttons button {
+            padding: 6px 12px;
+            font-size: 12px;
+            flex: none;
+            min-width: auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card.success {
+            background: linear-gradient(135deg, #34A853 0%, #2d8e47 100%);
+        }
+
+        .stat-card.warning {
+            background: linear-gradient(135deg, #FBBC05 0%, #e0a804 100%);
+        }
+
+        .stat-card.danger {
+            background: linear-gradient(135deg, #EA4335 0%, #d33426 100%);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #1F4E78;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #eee;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                font-size: 12px;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            td,
+            th {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ЗАГОЛОВОК -->
+        <div class="header">
+            <h1>🚨 ІАС ПМД</h1>
+            <p>Облік роботи піротехнічних розрахунків</p>
+        </div>
+
+        <!-- ВКЛАДКИ -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="form">📝 Новий виїзд</button>
+            <button class="tab-button" data-tab="list">📊 Список записів</button>
+            <button class="tab-button" data-tab="stats">📈 Статистика</button>
+        </div>
+
+        <!-- ВКЛАДКА 1: ФОРМА ДОДАВАННЯ -->
+        <div id="form" class="tab-content active">
+            <div id="formAlert" class="alert"></div>
+
+            <form id="worksForm">
+                <h2 style="margin-bottom: 20px; color: #1F4E78;">Додавання нового виїзду</h2>
+
+                <!-- РЯД 1: ДАТА И НОМЕР ЗАЯВКИ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date" class="required">Дата виїзду</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="requestNumber" class="required">Номер заявки</label>
+                        <input type="text" id="requestNumber" name="requestNumber" placeholder="Наприклад: ЗАЯ-2024-001" required>
+                    </div>
+                </div>
+
+                <!-- РЯД 2: РАЙОН И ГРОМАДА -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="district" class="required">Район</label>
+                        <input type="text" id="district" name="district" placeholder="Наприклад: Полтавський" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="community" class="required">Громада</label>
+                        <input type="text" id="community" name="community" placeholder="Наприклад: Полтавська" required>
+                    </div>
+                </div>
+
+                <!-- РЯД 3: НАСЕЛЕНИЙ ПУНКТ И АДРЕСА -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="locality" class="required">Населений пункт</label>
+                        <input type="text" id="locality" name="locality" placeholder="Наприклад: м. Полтава" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="required">Адреса</label>
+                        <input type="text" id="address" name="address" placeholder="Вулиця, будинок, квартира" required>
+                    </div>
+                </div>
+
+                <!-- РЯД 4: ВИД РОБІТ И КАТЕГОРІЯ ТЕРИТОРІЇ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="workType" class="required">Вид робіт</label>
+                        <select id="workType" name="workType" required>
+                            <option value="">-- Виберіть вид робіт --</option>
+                            <option value="Технічне обстеження">Технічне обстеження</option>
+                            <option value="Розкопки">Розкопки</option>
+                            <option value="Розминування">Розминування</option>
+                            <option value="Вивезення ВМ">Вивезення ВМ</option>
+                            <option value="Знищення ВМ">Знищення ВМ</option>
+                            <option value="Інше">Інше</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="required">Категорія території</label>
+                        <select id="category" name="category" required>
+                            <option value="">-- Виберіть категорію --</option>
+                            <option value="Відкрита територія">Відкрита територія</option>
+                            <option value="Житлова область">Житлова область</option>
+                            <option value="Комунальні об'єкти">Комунальні об'єкти</option>
+                            <option value="Сільськогосподарські угіддя">Сільськогосподарські угіддя</option>
+                            <option value="Лісова територія">Лісова територія</option>
+                            <option value="Водойма">Водойма</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- РЯД 5: ПЛОЩА И ВИЯВЛЕНО ВНП -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="area" class="required">Площа (га)</label>
+                        <input type="number" id="area" name="area" step="0.01" min="0" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="found" class="required">Виявлено ВНП (шт)</label>
+                        <input type="number" id="found" name="found" min="0" placeholder="0" required>
+                    </div>
+                </div>
+
+                <!-- РЯД 6: ПЕРЕДАНО И ЗНИЩЕНО -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transferred">Передано (шт)</label>
+                        <input type="number" id="transferred" name="transferred" min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="destroyed" class="required">Знищено (шт)</label>
+                        <input type="number" id="destroyed" name="destroyed" min="0" placeholder="0" required>
+                    </div>
+                </div>
+
+                <!-- РЯД 7: ВИБУХОВИЙ МАТЕРІАЛ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="explosive">Вибуховий матеріал</label>
+                        <input type="text" id="explosive" name="explosive" placeholder="Наприклад: Тротил, РДХ">
+                    </div>
+                    <div class="form-group">
+                        <label for="explosiveQty">Кількість ВМ (кг)</label>
+                        <input type="number" id="explosiveQty" name="explosiveQty" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                </div>
+
+                <!-- РЯД 8: ЗАСІБ ІНІЦІЮВАННЯ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="initiator">Засіб ініціювання</label>
+                        <input type="text" id="initiator" name="initiator" placeholder="Наприклад: Детонатор, Запал">
+                    </div>
+                    <div class="form-group">
+                        <label for="initiatorQty">Кількість ЗІ (шт)</label>
+                        <input type="number" id="initiatorQty" name="initiatorQty" min="0" placeholder="0">
+                    </div>
+                </div>
+
+                <!-- РЯД 9: АКТИ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="workAct">Акт виконаних робіт (номер)</label>
+                        <input type="text" id="workAct" name="workAct" placeholder="Наприклад: АКТ-2024-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="writeOffAct">Акт списання (номер)</label>
+                        <input type="text" id="writeOffAct" name="writeOffAct" placeholder="Наприклад: СПИ-2024-001">
+                    </div>
+                </div>
+
+                <!-- РЯД 10: КОМАНДА И КЕРІВНИК -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="team">Піротехнічний розрахунок</label>
+                        <input type="text" id="team" name="team" placeholder="Наприклад: Розрахунок №1">
+                    </div>
+                    <div class="form-group">
+                        <label for="leader" class="required">Керівник розрахунку</label>
+                        <input type="text" id="leader" name="leader" placeholder="ПІБ керівника" required>
+                    </div>
+                </div>
+
+                <!-- КНОПКИ -->
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">💾 Зберегти запис</button>
+                    <button type="reset" class="btn-secondary">🔄 Очистити форму</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ВКЛАДКА 2: СПИСОК ЗАПИСІВ -->
+        <div id="list" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #1F4E78;">📋 Всі записи</h2>
+
+            <div class="filter-section">
+                <div class="filter-row">
+                    <input type="text" id="filterDistrict" placeholder="Фільтр за районом">
+                    <input type="text" id="filterWorkType" placeholder="Фільтр за видом робіт">
+                    <input type="date" id="filterDateFrom" placeholder="З дати">
+                    <button class="btn-success" onclick="filterList()">🔍 Фільтр</button>
+                </div>
+            </div>
+
+            <div id="listAlert" class="alert"></div>
+
+            <div id="tableContainer" class="table-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Завантаження...</p>
+                </div>
+            </div>
+
+            <div class="button-group" style="margin-top: 20px;">
+                <button class="btn-warning" onclick="exportToExcel()">📥 Експортувати в Excel</button>
+                <button class="btn-secondary" onclick="loadWorksData()">🔄 Оновити</button>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА 3: СТАТИСТИКА -->
+        <div id="stats" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #1F4E78;">📊 Загальна статистика</h2>
+
+            <div id="statsAlert" class="alert"></div>
+
+            <div id="statsContainer" class="stats">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Завантаження...</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <button class="btn-success" onclick="loadStats()">🔄 Оновити статистику</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПІДВАЛ -->
+    <div class="footer">
+        <p>ІАС ПМД v4.0 | © 2024 ДСНС України | Полтавська область</p>
+    </div>
+
+    <script>
+        // ============================================
+        // ГЛОБАЛЬНІ ЗМІННІ
+        // ============================================
+        let allWorks = [];
+
+        // ============================================
+        // ІНІЦІАЛІЗАЦІЯ
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            setupTabs();
+            setupForm();
+            setTodayDate();
+        }
+
+        // ============================================
+        // ВКЛАДКИ
+        // ============================================
+        function setupTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.getAttribute('data-tab');
+
+                    // Видаляємо активний клас
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Додаємо активний клас
+                    button.classList.add('active');
+                    document.getElementById(tabName).classList.add('active');
+
+                    // Завантажуємо дані залежно від вкладки
+                    if (tabName === 'list') {
+                        loadWorksData();
+                    } else if (tabName === 'stats') {
+                        loadStats();
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // ФОРМА
+        // ============================================
+        function setupForm() {
+            const form = document.getElementById('worksForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitForm();
+            });
+        }
+
+        function setTodayDate() {
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.value = today;
+        }
+
+        async function submitForm() {
+            const formData = getFormData();
+
+            if (!validateForm(formData)) {
+                return;
+            }
+
+            try {
+                const response = await callGoogleAPI('addWork', formData);
+
+                if (response.success) {
+                    showAlert('formAlert', `✅ ${response.message}`, 'success');
+                    document.getElementById('worksForm').reset();
+                    setTodayDate();
+                } else {
+                    showAlert('formAlert', `❌ ${response.message}`, 'error');
+                }
+            } catch (error) {
+                showAlert('formAlert', `❌ Помилка: ${error.message}`, 'error');
+            }
+        }
+
+        function getFormData() {
+            return {
+                date: new Date(document.getElementById('date').value),
+                requestNumber: document.getElementById('requestNumber').value,
+                district: document.getElementById('district').value,
+                community: document.getElementById('community').value,
+                locality: document.getElementById('locality').value,
+                address: document.getElementById('address').value,
+                workType: document.getElementById('workType').value,
+                category: document.getElementById('category').value,
+                area: parseFloat(document.getElementById('area').value) || 0,
+                found: parseInt(document.getElementById('found').value) || 0,
+                transferred: parseInt(document.getElementById('transferred').value) || 0,
+                destroyed: parseInt(document.getElementById('destroyed').value) || 0,
+                workAct: document.getElementById('workAct').value,
+                explosive: document.getElementById('explosive').value,
+                explosiveQty: parseFloat(document.getElementById('explosiveQty').value) || 0,
+                initiator: document.getElementById('initiator').value,
+                initiatorQty: parseInt(document.getElementById('initiatorQty').value) || 0,
+                writeOffAct: document.getElementById('writeOffAct').value,
+                team: document.getElementById('team').value,
+                leader: document.getElementById('leader').value
+            };
+        }
+
+        function validateForm(data) {
+            const requiredFields = ['date', 'requestNumber', 'district', 'community', 'locality', 'address', 'workType', 'category', 'leader'];
+
+            for (let field of requiredFields) {
+                if (!data[field]) {
+                    showAlert('formAlert', `❌ Заповніть поле: ${field}`, 'error');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // ============================================
+        // СПИСОК ЗАПИСІВ
+        // ============================================
+        async function loadWorksData() {
+            try {
+                const response = await callGoogleAPI('getWorks', {});
+
+                if (response.success) {
+                    allWorks = response.data;
+                    renderTable(allWorks);
+                } else {
+                    showAlert('listAlert', `❌ ${response.message}`, 'error');
+                }
+            } catch (error) {
+                showAlert('listAlert', `❌ Помилка: ${error.message}`, 'error');
+            }
+        }
+
+        function renderTable(works) {
+            const container = document.getElementById('tableContainer');
+
+            if (works.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>Немає записів для відображення</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Дата</th>
+                            <th>Номер заявки</th>
+                            <th>Район</th>
+                            <th>Адреса</th>
+                            <th>Вид робіт</th>
+                            <th>Площа (га)</th>
+                            <th>Знищено</th>
+                            <th>ВМ (кг)</th>
+                            <th>Керівник</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            works.forEach(work => {
+                html += `
+                    <tr>
+                        <td><strong>${work.id}</strong></td>
+                        <td>${formatDate(work.date)}</td>
+                        <td>${work.requestNumber}</td>
+                        <td>${work.district}</td>
+                        <td>${work.address}</td>
+                        <td>${work.workType}</td>
+                        <td>${parseFloat(work.area).toFixed(2)}</td>
+                        <td>${work.destroyed}</td>
+                        <td>${parseFloat(work.explosiveQty).toFixed(2)}</td>
+                        <td>${work.leader}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-secondary" onclick="viewWork('${work.id}')">👁️</button>
+                                <button class="btn-danger" onclick="deleteWork('${work.id}')">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function filterList() {
+            const district = document.getElementById('filterDistrict').value.toLowerCase();
+            const workType = document.getElementById('filterWorkType').value.toLowerCase();
+            const dateFrom = document.getElementById('filterDateFrom').value;
+
+            let filtered = allWorks;
+
+            if (district) {
+                filtered = filtered.filter(w => w.district.toLowerCase().includes(district));
+            }
+
+            if (workType) {
+                filtered = filtered.filter(w => w.workType.toLowerCase().includes(workType));
+            }
+
+            if (dateFrom) {
+                filtered = filtered.filter(w => w.date >= dateFrom);
+            }
+
+            renderTable(filtered);
+        }
+
+        async function deleteWork(id) {
+            if (!confirm(`Ви впевнені, що хочете видалити запис ${id}?`)) {
+                return;
+            }
+
+            try {
+                const response = await callGoogleAPI('deleteWork', { id });
+
+                if (response.success) {
+                    showAlert('listAlert', `✅ ${response.message}`, 'success');
+                    loadWorksData();
+                } else {
+                    showAlert('listAlert', `❌ ${response.message}`, 'error');
+                }
+            } catch (error) {
+                showAlert('listAlert', `❌ Помилка: ${error.message}`, 'error');
+            }
+        }
+
+        function viewWork(id) {
+            const work = allWorks.find(w => w.id === id);
+            if (work) {
+                alert(`📋 Запис ${id}\n\nДата: ${work.date}\nРайон: ${work.district}\nАдреса: ${work.address}\nКерівник: ${work.leader}`);
+            }
+        }
+
+        async function exportToExcel() {
+            try {
+                const response = await callGoogleAPI('exportExcel', {});
+
+                if (response.success) {
+                    showAlert('listAlert', `✅ ${response.message}`, 'success');
+                    window.open(response.url, '_blank');
+                } else {
+                    showAlert('listAlert', `❌ ${response.message}`, 'error');
+                }
+            } catch (error) {
+                showAlert('listAlert', `❌ Помилка: ${error.message}`, 'error');
+            }
+        }
+
+        // ============================================
+        // СТАТИСТИКА
+        // ============================================
+        async function loadStats() {
+            try {
+                const response = await callGoogleAPI('getStats', {});
+
+                if (response.success) {
+                    renderStats(response.data);
+                } else {
+                    showAlert('statsAlert', `❌ ${response.message}`, 'error');
+                }
+            } catch (error) {
+                showAlert('statsAlert', `❌ Помилка: ${error.message}`, 'error');
+            }
+        }
+
+        function renderStats(data) {
+            const container = document.getElementById('statsContainer');
+
+            container.innerHTML = `
+                <div class="stat-card success">
+                    <div class="stat-label">Всього записів</div>
+                    <div class="stat-value">${data.totalWorks}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Всього площа</div>
+                    <div class="stat-value">${parseFloat(data.totalArea).toFixed(2)}</div>
+                    <div class="stat-label">га</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-label">Виявлено</div>
+                    <div class="stat-value">${data.totalFound}</div>
+                    <div class="stat-label">ВНП</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-label">Знищено</div>
+                    <div class="stat-value">${data.totalDestroyed}</div>
+                    <div class="stat-label">ВНП</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Вибуховий матеріал</div>
+                    <div class="stat-value">${parseFloat(data.totalExplosive).toFixed(2)}</div>
+                    <div class="stat-label">кг</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Засоби ініціювання</div>
+                    <div class="stat-value">${data.totalInitiator}</div>
+                    <div class="stat-label">шт</div>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // API
+        // ============================================
+        async function callGoogleAPI(action, data) {
+            const url = ScriptApp.getService().getUrl();
+
+            const response = await fetch(url, {
+                method: 'POST',
+                payload: JSON.stringify(data),
+                parameters: {
+                    action: action
+                }
+            }).then(r => r.text()).then(t => JSON.parse(t));
+
+            return response;
+        }
+
+        // ============================================
+        // УТИЛІТИ
+        // ============================================
+        function showAlert(elementId, message, type) {
+            const alertDiv = document.getElementById(elementId);
+            alertDiv.textContent = message;
+            alertDiv.className = `alert show alert-${type}`;
+
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+            }, 5000);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('uk-UA');
+        }
+    </script>
+</body>
+</html>
