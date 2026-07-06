@@ -189,15 +189,16 @@ const ValidationService = (() => {
 
     required(data.date, 'Дата');
 
-    required(data.requestNumber, 'Номер заявки');
-
-    required(data.district, 'Район');
-
-    required(data.community, 'Громада');
+    required(data.region, 'Область');
 
     required(data.locality, 'Населений пункт');
 
     required(data.workType, 'Вид робіт');
+
+    required(data.leader, 'Керівник розрахунку');
+
+    // Номер заявки не обов'язковий
+    // Адреса не обов'язкова
 
     // Площа може бути 0 (не робилась)
     nonNegative(data.area, 'Площа');
@@ -205,7 +206,7 @@ const ValidationService = (() => {
     // Виявлено/Знищено можуть бути 0
     nonNegative(data.found, 'Виявлено ВНП');
 
-    nonNegative(data.destroyed, 'Знищено');
+    nonNegative(data.destroyed, 'Знищено ВНП');
 
     return true;
 
