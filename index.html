@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ІАС ПМД - Облік роботи піротехнічних розрахунків</title>
+    <title>ІАС е-Пірат - Облік роботи піротехнічних розрахунків</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 10px;
@@ -85,12 +85,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .form-group {
@@ -122,9 +118,7 @@
             color: #EA4335;
         }
 
-        input,
-        select,
-        textarea {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -134,18 +128,11 @@
             transition: all 0.3s ease;
         }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #1F4E78;
             box-shadow: 0 0 0 3px rgba(31, 78, 120, 0.1);
             background-color: #f0f4f8;
-        }
-
-        input[type="date"],
-        input[type="number"] {
-            width: 100%;
         }
 
         textarea {
@@ -180,10 +167,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(31, 78, 120, 0.3);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
         }
 
         .btn-secondary {
@@ -232,17 +215,6 @@
             animation: slideDown 0.3s ease;
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         .alert.show {
             display: block;
         }
@@ -259,12 +231,6 @@
             color: #721c24;
         }
 
-        .alert-info {
-            background: #d1ecf1;
-            border: 1px solid #bee5eb;
-            color: #0c5460;
-        }
-
         .table-container {
             overflow-x: auto;
             margin-top: 20px;
@@ -274,12 +240,6 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
-        }
-
-        thead {
-            background: #f0f0f0;
-            position: sticky;
-            top: 0;
         }
 
         th {
@@ -319,12 +279,6 @@
             margin-top: 20px;
         }
 
-        @media (max-width: 768px) {
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         .stat-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -357,30 +311,6 @@
             opacity: 0.9;
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .spinner {
-            border: 4px solid #f0f0f0;
-            border-top: 4px solid #1F4E78;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
         .filter-section {
             background: #f8f9fa;
             padding: 15px;
@@ -390,7 +320,7 @@
 
         .filter-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
             gap: 10px;
             align-items: flex-end;
         }
@@ -416,106 +346,61 @@
             color: #999;
         }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
         @media (max-width: 600px) {
             .header h1 {
                 font-size: 18px;
             }
-
             .button-group {
                 flex-direction: column;
-            }
-
-            .tab-button {
-                font-size: 12px;
-            }
-
-            table {
-                font-size: 11px;
-            }
-
-            td,
-            th {
-                padding: 8px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ЗАГОЛОВОК -->
         <div class="header">
-            <h1>🚨 ІАС ПМД</h1>
+            <h1>⚠️ ІАС е-Пірат</h1>
             <p>Облік роботи піротехнічних розрахунків</p>
         </div>
 
-        <!-- ВКЛАДКИ -->
         <div class="tabs">
             <button class="tab-button active" data-tab="form">📝 Новий виїзд</button>
             <button class="tab-button" data-tab="list">📊 Список записів</button>
             <button class="tab-button" data-tab="stats">📈 Статистика</button>
         </div>
 
-        <!-- ВКЛАДКА 1: ФОРМА ДОДАВАННЯ -->
         <div id="form" class="tab-content active">
             <div id="formAlert" class="alert"></div>
 
             <form id="worksForm">
                 <h2 style="margin-bottom: 20px; color: #1F4E78;">Додавання нового виїзду</h2>
 
-                <!-- РЯД 1: ДАТА И НОМЕР ЗАЯВКИ -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="date" class="required">Дата виїзду</label>
                         <input type="date" id="date" name="date" required>
                     </div>
                     <div class="form-group">
-                        <label for="requestNumber" class="required">Номер заявки</label>
-                        <input type="text" id="requestNumber" name="requestNumber" placeholder="Наприклад: ЗАЯ-2024-001" required>
+                        <label for="requestNumber">Номер заявки</label>
+                        <input type="text" id="requestNumber" name="requestNumber" placeholder="Наприклад: ЗАЯ-2024-001">
                     </div>
                 </div>
 
-                <!-- РЯД 2: РАЙОН И ГРОМАДА -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="district" class="required">Район</label>
-                        <input type="text" id="district" name="district" placeholder="Наприклад: Полтавський" required>
+                        <label for="region" class="required">Область</label>
+                        <input type="text" id="region" name="region" placeholder="Наприклад: Полтавська" required>
                     </div>
-                    <div class="form-group">
-                        <label for="community" class="required">Громада</label>
-                        <input type="text" id="community" name="community" placeholder="Наприклад: Полтавська" required>
-                    </div>
-                </div>
-
-                <!-- РЯД 3: НАСЕЛЕНИЙ ПУНКТ И АДРЕСА -->
-                <div class="form-row">
                     <div class="form-group">
                         <label for="locality" class="required">Населений пункт</label>
                         <input type="text" id="locality" name="locality" placeholder="Наприклад: м. Полтава" required>
                     </div>
-                    <div class="form-group">
-                        <label for="address" class="required">Адреса</label>
-                        <input type="text" id="address" name="address" placeholder="Вулиця, будинок, квартира" required>
-                    </div>
                 </div>
 
-                <!-- РЯД 4: ВИД РОБІТ И КАТЕГОРІЯ ТЕРИТОРІЇ -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="workType" class="required">Вид робіт</label>
-                        <select id="workType" name="workType" required>
-                            <option value="">-- Виберіть вид робіт --</option>
-                            <option value="Технічне обстеження">Технічне обстеження</option>
-                            <option value="Розкопки">Розкопки</option>
-                            <option value="Розминування">Розминування</option>
-                            <option value="Вивезення ВМ">Вивезення ВМ</option>
-                            <option value="Знищення ВМ">Знищення ВМ</option>
-                            <option value="Інше">Інше</option>
-                        </select>
+                        <label for="address">Адреса</label>
+                        <input type="text" id="address" name="address" placeholder="Вулиця, будинок, квартира">
                     </div>
                     <div class="form-group">
                         <label for="category" class="required">Категорія території</label>
@@ -531,35 +416,82 @@
                     </div>
                 </div>
 
-                <!-- РЯД 5: ПЛОЩА И ВИЯВЛЕНО ВНП -->
                 <div class="form-row">
+                    <div class="form-group">
+                        <label for="workType" class="required">Вид робіт</label>
+                        <select id="workType" name="workType" required>
+                            <option value="">-- Виберіть вид робіт --</option>
+                            <option value="Встановлення маркування">Встановлення маркування</option>
+                            <option value="Візуальне обстеження">Візуальне обстеження</option>
+                            <option value="ТО">ТО</option>
+                            <option value="ОР ручне Р">ОР ручне Р</option>
+                            <option value="ОР ОРВБД">ОР ОРВБД</option>
+                            <option value="Мех. розмін.">Мех. розмін.</option>
+                            <option value="Знищ. раніше виявлених ВНП">Знищ. раніше виявлених ВНП</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="area" class="required">Площа (га)</label>
                         <input type="number" id="area" name="area" step="0.01" min="0" placeholder="0.00" required>
                     </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group">
                         <label for="found" class="required">Виявлено ВНП (шт)</label>
                         <input type="number" id="found" name="found" min="0" placeholder="0" required>
                     </div>
-                </div>
-
-                <!-- РЯД 6: ПЕРЕДАНО И ЗНИЩЕНО -->
-                <div class="form-row">
                     <div class="form-group">
-                        <label for="transferred">Передано (шт)</label>
+                        <label for="transferred">Передано ВНП (шт)</label>
                         <input type="number" id="transferred" name="transferred" min="0" placeholder="0">
                     </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="destroyed" class="required">Знищено (шт)</label>
+                        <label for="destroyed" class="required">Знищено ВНП (шт)</label>
                         <input type="number" id="destroyed" name="destroyed" min="0" placeholder="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ammunitionType">Тип ВНП</label>
+                        <select id="ammunitionType" name="ammunitionType">
+                            <option value="">-- Виберіть тип ВНП --</option>
+                            <option value="Авіаційна бомба">Авіаційна бомба</option>
+                            <option value="Артилерійський (танковий) снаряд">Артилерійський (танковий) снаряд</option>
+                            <option value="Боєприпас до стрілецької зброї">Боєприпас до стрілецької зброї</option>
+                            <option value="БпЛА">БпЛА</option>
+                            <option value="Вибухові речовини, порох">Вибухові речовини, порох</option>
+                            <option value="Граната (ручна, реактивна, постріл)">Граната (ручна, реактивна, постріл)</option>
+                            <option value="Інженерні (промислові) заряди">Інженерні (промислові) заряди</option>
+                            <option value="Касетний боєприпас">Касетний боєприпас</option>
+                            <option value="Касетний елемент">Касетний елемент</option>
+                            <option value="Міна-пастка">Міна-пастка</option>
+                            <option value="Мінометна міна">Мінометна міна</option>
+                            <option value="Небезпечні залишки БпЛА">Небезпечні залишки БпЛА</option>
+                            <option value="Небезпечні залишки ракети">Небезпечні залишки ракети</option>
+                            <option value="Підривник">Підривник</option>
+                            <option value="Протикорабельна (протидесантна) міна">Протикорабельна (протидесантна) міна</option>
+                            <option value="Протипіхотна міна">Протипіхотна міна</option>
+                            <option value="Протипіхотна міна керована">Протипіхотна міна керована</option>
+                            <option value="Протитанкова (протитранспортна) міна">Протитанкова (протитранспортна) міна</option>
+                            <option value="Ракета">Ракета</option>
+                            <option value="Реактивний боєприпас">Реактивний боєприпас</option>
+                            <option value="СВП">СВП</option>
+                            <option value="Торпеда">Торпеда</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- РЯД 7: ВИБУХОВИЙ МАТЕРІАЛ -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="explosive">Вибуховий матеріал</label>
-                        <input type="text" id="explosive" name="explosive" placeholder="Наприклад: Тротил, РДХ">
+                        <select id="explosive" name="explosive">
+                            <option value="">-- Виберіть матеріал --</option>
+                            <option value="ТНТ Бустер КР-420В">ТНТ Бустер КР-420В</option>
+                            <option value="ТНТ Бустер КР-840В">ТНТ Бустер КР-840В</option>
+                            <option value="шашка 0,2 кг">шашка 0,2 кг</option>
+                            <option value="шашка 0,4 кг">шашка 0,4 кг</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="explosiveQty">Кількість ВМ (кг)</label>
@@ -567,11 +499,15 @@
                     </div>
                 </div>
 
-                <!-- РЯД 8: ЗАСІБ ІНІЦІЮВАННЯ -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="initiator">Засіб ініціювання</label>
-                        <input type="text" id="initiator" name="initiator" placeholder="Наприклад: Детонатор, Запал">
+                        <select id="initiator" name="initiator">
+                            <option value="">-- Виберіть засіб --</option>
+                            <option value="ЕДП">ЕДП</option>
+                            <option value="ЕДП-р">ЕДП-р</option>
+                            <option value="ЕД-8-Ж-м1">ЕД-8-Ж-м1</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="initiatorQty">Кількість ЗІ (шт)</label>
@@ -579,7 +515,22 @@
                     </div>
                 </div>
 
-                <!-- РЯД 9: АКТИ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="wire">Використано проводу (м)</label>
+                        <select id="wire" name="wire">
+                            <option value="">-- Виберіть тип проводу --</option>
+                            <option value="СПП-1">СПП-1</option>
+                            <option value="СПП-2">СПП-2</option>
+                            <option value="П-27">П-27</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wireQty">Довжина (м)</label>
+                        <input type="number" id="wireQty" name="wireQty" min="0" placeholder="0">
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="workAct">Акт виконаних робіт (номер)</label>
@@ -591,19 +542,13 @@
                     </div>
                 </div>
 
-                <!-- РЯД 10: КОМАНДА И КЕРІВНИК -->
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="team">Піротехнічний розрахунок</label>
-                        <input type="text" id="team" name="team" placeholder="Наприклад: Розрахунок №1">
-                    </div>
                     <div class="form-group">
                         <label for="leader" class="required">Керівник розрахунку</label>
                         <input type="text" id="leader" name="leader" placeholder="ПІБ керівника" required>
                     </div>
                 </div>
 
-                <!-- КНОПКИ -->
                 <div class="button-group">
                     <button type="submit" class="btn-primary">💾 Зберегти запис</button>
                     <button type="reset" class="btn-secondary">🔄 Очистити форму</button>
@@ -611,14 +556,14 @@
             </form>
         </div>
 
-        <!-- ВКЛАДКА 2: СПИСОК ЗАПИСІВ -->
         <div id="list" class="tab-content">
             <h2 style="margin-bottom: 20px; color: #1F4E78;">📋 Всі записи</h2>
 
             <div class="filter-section">
                 <div class="filter-row">
-                    <input type="text" id="filterDistrict" placeholder="Фільтр за районом">
-                    <input type="text" id="filterWorkType" placeholder="Фільтр за видом робіт">
+                    <input type="text" id="filterRegion" placeholder="Фільтр за областю">
+                    <input type="text" id="filterLeader" placeholder="Фільтр за керівником">
+                    <input type="text" id="filterWriteOffAct" placeholder="Фільтр за Акт списання">
                     <input type="date" id="filterDateFrom" placeholder="З дати">
                     <button class="btn-success" onclick="filterList()">🔍 Фільтр</button>
                 </div>
@@ -627,8 +572,7 @@
             <div id="listAlert" class="alert"></div>
 
             <div id="tableContainer" class="table-container">
-                <div class="loading">
-                    <div class="spinner"></div>
+                <div style="text-align: center; padding: 40px;">
                     <p>Завантаження...</p>
                 </div>
             </div>
@@ -639,15 +583,13 @@
             </div>
         </div>
 
-        <!-- ВКЛАДКА 3: СТАТИСТИКА -->
         <div id="stats" class="tab-content">
             <h2 style="margin-bottom: 20px; color: #1F4E78;">📊 Загальна статистика</h2>
 
             <div id="statsAlert" class="alert"></div>
 
             <div id="statsContainer" class="stats">
-                <div class="loading">
-                    <div class="spinner"></div>
+                <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
                     <p>Завантаження...</p>
                 </div>
             </div>
@@ -658,20 +600,13 @@
         </div>
     </div>
 
-    <!-- ПІДВАЛ -->
     <div class="footer">
-        <p>ІАС ПМД v4.0 | © 2024 ДСНС України | Полтавська область</p>
+        <p>ІАС е-Пірат v4.0 | © 2024 ДСНС України | Полтавська область</p>
     </div>
 
     <script>
-        // ============================================
-        // ГЛОБАЛЬНІ ЗМІННІ
-        // ============================================
         let allWorks = [];
 
-        // ============================================
-        // ІНІЦІАЛІЗАЦІЯ
-        // ============================================
         document.addEventListener('DOMContentLoaded', () => {
             initializeApp();
         });
@@ -682,9 +617,6 @@
             setTodayDate();
         }
 
-        // ============================================
-        // ВКЛАДКИ
-        // ============================================
         function setupTabs() {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -692,16 +624,11 @@
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const tabName = button.getAttribute('data-tab');
-
-                    // Видаляємо активний клас
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-
-                    // Додаємо активний клас
                     button.classList.add('active');
                     document.getElementById(tabName).classList.add('active');
 
-                    // Завантажуємо дані залежно від вкладки
                     if (tabName === 'list') {
                         loadWorksData();
                     } else if (tabName === 'stats') {
@@ -711,9 +638,6 @@
             });
         }
 
-        // ============================================
-        // ФОРМА
-        // ============================================
         function setupForm() {
             const form = document.getElementById('worksForm');
             form.addEventListener('submit', (e) => {
@@ -754,8 +678,7 @@
             return {
                 date: new Date(document.getElementById('date').value),
                 requestNumber: document.getElementById('requestNumber').value,
-                district: document.getElementById('district').value,
-                community: document.getElementById('community').value,
+                region: document.getElementById('region').value,
                 locality: document.getElementById('locality').value,
                 address: document.getElementById('address').value,
                 workType: document.getElementById('workType').value,
@@ -764,19 +687,21 @@
                 found: parseInt(document.getElementById('found').value) || 0,
                 transferred: parseInt(document.getElementById('transferred').value) || 0,
                 destroyed: parseInt(document.getElementById('destroyed').value) || 0,
+                ammunitionType: document.getElementById('ammunitionType').value,
                 workAct: document.getElementById('workAct').value,
                 explosive: document.getElementById('explosive').value,
                 explosiveQty: parseFloat(document.getElementById('explosiveQty').value) || 0,
                 initiator: document.getElementById('initiator').value,
                 initiatorQty: parseInt(document.getElementById('initiatorQty').value) || 0,
+                wire: document.getElementById('wire').value,
+                wireQty: parseInt(document.getElementById('wireQty').value) || 0,
                 writeOffAct: document.getElementById('writeOffAct').value,
-                team: document.getElementById('team').value,
                 leader: document.getElementById('leader').value
             };
         }
 
         function validateForm(data) {
-            const requiredFields = ['date', 'requestNumber', 'district', 'community', 'locality', 'address', 'workType', 'category', 'leader'];
+            const requiredFields = ['date', 'region', 'locality', 'workType', 'category', 'leader'];
 
             for (let field of requiredFields) {
                 if (!data[field]) {
@@ -788,9 +713,6 @@
             return true;
         }
 
-        // ============================================
-        // СПИСОК ЗАПИСІВ
-        // ============================================
         async function loadWorksData() {
             try {
                 const response = await callGoogleAPI('getWorks', {});
@@ -812,7 +734,6 @@
             if (works.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
                         <p>Немає записів для відображення</p>
                     </div>
                 `;
@@ -825,14 +746,12 @@
                         <tr>
                             <th>ID</th>
                             <th>Дата</th>
-                            <th>Номер заявки</th>
-                            <th>Район</th>
-                            <th>Адреса</th>
+                            <th>Область</th>
+                            <th>Населений пункт</th>
                             <th>Вид робіт</th>
-                            <th>Площа (га)</th>
-                            <th>Знищено</th>
-                            <th>ВМ (кг)</th>
+                            <th>Знищено ВНП</th>
                             <th>Керівник</th>
+                            <th>Акт списання</th>
                             <th>Дії</th>
                         </tr>
                     </thead>
@@ -844,14 +763,12 @@
                     <tr>
                         <td><strong>${work.id}</strong></td>
                         <td>${formatDate(work.date)}</td>
-                        <td>${work.requestNumber}</td>
-                        <td>${work.district}</td>
-                        <td>${work.address}</td>
+                        <td>${work.region}</td>
+                        <td>${work.locality}</td>
                         <td>${work.workType}</td>
-                        <td>${parseFloat(work.area).toFixed(2)}</td>
                         <td>${work.destroyed}</td>
-                        <td>${parseFloat(work.explosiveQty).toFixed(2)}</td>
                         <td>${work.leader}</td>
+                        <td>${work.writeOffAct}</td>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-secondary" onclick="viewWork('${work.id}')">👁️</button>
@@ -862,27 +779,28 @@
                 `;
             });
 
-            html += `
-                    </tbody>
-                </table>
-            `;
-
+            html += `</tbody></table>`;
             container.innerHTML = html;
         }
 
         function filterList() {
-            const district = document.getElementById('filterDistrict').value.toLowerCase();
-            const workType = document.getElementById('filterWorkType').value.toLowerCase();
+            const region = document.getElementById('filterRegion').value.toLowerCase();
+            const leader = document.getElementById('filterLeader').value.toLowerCase();
+            const writeOffAct = document.getElementById('filterWriteOffAct').value.toLowerCase();
             const dateFrom = document.getElementById('filterDateFrom').value;
 
             let filtered = allWorks;
 
-            if (district) {
-                filtered = filtered.filter(w => w.district.toLowerCase().includes(district));
+            if (region) {
+                filtered = filtered.filter(w => w.region.toLowerCase().includes(region));
             }
 
-            if (workType) {
-                filtered = filtered.filter(w => w.workType.toLowerCase().includes(workType));
+            if (leader) {
+                filtered = filtered.filter(w => w.leader.toLowerCase().includes(leader));
+            }
+
+            if (writeOffAct) {
+                filtered = filtered.filter(w => w.writeOffAct.toLowerCase().includes(writeOffAct));
             }
 
             if (dateFrom) {
@@ -914,7 +832,7 @@
         function viewWork(id) {
             const work = allWorks.find(w => w.id === id);
             if (work) {
-                alert(`📋 Запис ${id}\n\nДата: ${work.date}\nРайон: ${work.district}\nАдреса: ${work.address}\nКерівник: ${work.leader}`);
+                alert(`📋 Запис ${id}\n\nДата: ${work.date}\nОбласть: ${work.region}\nНаселений пункт: ${work.locality}\nКерівник: ${work.leader}`);
             }
         }
 
@@ -933,9 +851,6 @@
             }
         }
 
-        // ============================================
-        // СТАТИСТИКА
-        // ============================================
         async function loadStats() {
             try {
                 const response = await callGoogleAPI('getStats', {});
@@ -986,9 +901,6 @@
             `;
         }
 
-        // ============================================
-        // API
-        // ============================================
         async function callGoogleAPI(action, data) {
             const url = ScriptApp.getService().getUrl();
 
@@ -998,27 +910,24 @@
                 parameters: {
                     action: action
                 }
-            }).then(r => r.text()).then(t => JSON.parse(t));
+            });
 
-            return response;
+            return await response.json();
         }
 
-        // ============================================
-        // УТИЛІТИ
-        // ============================================
         function showAlert(elementId, message, type) {
-            const alertDiv = document.getElementById(elementId);
-            alertDiv.textContent = message;
-            alertDiv.className = `alert show alert-${type}`;
-
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `alert show alert-${type}`;
             setTimeout(() => {
-                alertDiv.classList.remove('show');
+                element.classList.remove('show');
             }, 5000);
         }
 
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('uk-UA');
+        function formatDate(date) {
+            if (!date) return '';
+            const d = new Date(date);
+            return d.toLocaleDateString('uk-UA');
         }
     </script>
 </body>
