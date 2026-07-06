@@ -177,6 +177,49 @@ const CONFIG = Object.freeze({
       'П-27'
     ]
 
+  },
+
+  // =====================================================================
+  // РОЛІ ТА ДОСТУПИ
+  // =====================================================================
+  ROLES: {
+    ADMIN: 'admin',           // Адміністратор - повний доступ
+    ANALYST: 'analyst',       // Аналітик - перегляд усіх розділів
+    LEADER: 'leader'          // Керівник розрахунку - тільки "Новий виїзд"
+  },
+
+  // EMAIL користувачів та їх ролі
+  // Замініть на реальні email-и вашої організації
+  USERS: {
+    'admin@example.com': 'admin',
+    'analyst@example.com': 'analyst',
+    'leader1@example.com': 'leader',
+    'leader2@example.com': 'leader'
+  },
+
+  // Дозволи для кожної ролі
+  PERMISSIONS: {
+    'admin': {
+      canAddWork: true,
+      canViewList: true,
+      canViewStats: true,
+      canDeleteWork: true,
+      canExportExcel: true
+    },
+    'analyst': {
+      canAddWork: false,
+      canViewList: true,
+      canViewStats: true,
+      canDeleteWork: false,
+      canExportExcel: true
+    },
+    'leader': {
+      canAddWork: true,
+      canViewList: false,
+      canViewStats: false,
+      canDeleteWork: false,
+      canExportExcel: false
+    }
   }
 
 });
